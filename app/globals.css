@@ -176,6 +176,7 @@ main {
   grid-template-columns: 1fr 372px;
   gap: 96px;
   padding-top: 8px;
+  align-items: start;
 }
 
 .listing-main {
@@ -183,7 +184,16 @@ main {
 }
 
 .listing-sidebar {
-  position: relative;
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+  max-height: calc(100vh - var(--header-height) - 48px);
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.listing-sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Header */

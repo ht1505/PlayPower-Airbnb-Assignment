@@ -140,7 +140,7 @@ export default function ListingPage() {
             />
           </div>
 
-          {/* Two-column layout */}
+          {/* Two-column layout — sidebar sticky through calendar only */}
           <div className="listing-layout">
             <div className="listing-main">
               <ListingContent
@@ -148,7 +148,10 @@ export default function ListingPage() {
                 amenities={amenities}
                 onShowAllAmenities={openAmenities}
               />
+
+              <AvailabilityCalendar />
             </div>
+
             <aside className="listing-sidebar">
               <BookingCard
                 onReserve={() => setToast("Reservation request submitted for 5 nights!")}
@@ -157,9 +160,7 @@ export default function ListingPage() {
             </aside>
           </div>
 
-          {/* Full-width sections */}
-          <AvailabilityCalendar />
-
+          {/* Full-width sections — booking card scrolls away here */}
           <ReviewsSection
             reviews={reviews}
             rating={property.rating}

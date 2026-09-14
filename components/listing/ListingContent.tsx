@@ -10,6 +10,32 @@ interface ListingContentProps {
   onShowAllAmenities: () => void;
 }
 
+function AmenityIcon({ name }: { name: string }) {
+  const n = name.toLowerCase();
+  if (n.includes("kitchen"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 3v4a1 1 0 001 1h6a1 1 0 001-1V3" /><path d="M3 8h18v13H3z" /><path d="M12 12v5" strokeLinecap="round" /></svg>);
+  if (n.includes("wifi"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 12.55a11 11 0 0114.08 0" /><path d="M1.42 9a16 16 0 0121.16 0" /><path d="M8.53 16.11a6 6 0 016.95 0" /><circle cx="12" cy="20" r="1" fill="currentColor" /></svg>);
+  if (n.includes("pool"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 12c1.5 2 3.5 2 5 0s3.5-2 5 0 3.5 2 5 0" strokeLinecap="round" /><path d="M2 17c1.5 2 3.5 2 5 0s3.5-2 5 0 3.5 2 5 0" strokeLinecap="round" /><circle cx="7" cy="5" r="2" /><path d="M7 7v3h4l2-3" strokeLinecap="round" /></svg>);
+  if (n.includes("workspace") || n.includes("desk"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="7" width="20" height="11" rx="2" /><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" /><path d="M2 13h20" /></svg>);
+  if (n.includes("parking"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 17V7h4a3 3 0 010 6H9" strokeLinecap="round" /></svg>);
+  if (n.includes("hot tub") || n.includes("jacuzzi"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 14h16M4 10h16" strokeLinecap="round" /><path d="M8 6c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2" /><path d="M2 18h20v2H2z" /></svg>);
+  if (n.includes("pet"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="4.5" cy="6.5" r="1.5" /><circle cx="9.5" cy="3.5" r="1.5" /><circle cx="14.5" cy="3.5" r="1.5" /><circle cx="19.5" cy="6.5" r="1.5" /><path d="M17 12c0 2.8-2.2 6-5 8.5C9.2 18 7 14.8 7 12c0-2.8 2.2-5 5-5s5 2.2 5 5z" /></svg>);
+  if (n.includes("camera") || n.includes("security"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" /><circle cx="12" cy="13" r="4" /></svg>);
+  if (n.includes("tv") || n.includes("television"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="4" width="20" height="14" rx="2" /><path d="M8 20h8M12 18v2" strokeLinecap="round" /></svg>);
+  if (n.includes("refrigerator") || n.includes("fridge"))
+    return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="5" y="2" width="14" height="20" rx="2" /><path d="M5 10h14" /><path d="M9 6v2M9 14v2" strokeLinecap="round" /></svg>);
+  // Default
+  return (<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>);
+}
+
 function HighlightIcon({ name }: { name: string }) {
   if (name.includes("entertainment"))
     return (
@@ -160,13 +186,15 @@ export default function ListingContent({
       <div className={styles.sleeping} id="section-sleeping">
         <h2>Where you&apos;ll sleep</h2>
         <div className={styles.sleepingGrid}>
-          {prop.sleepingArrangements.map((arrangement) => (
+          {prop.sleepingArrangements.map((arrangement, idx) => (
             <div key={arrangement.room} className={styles.sleepingCard}>
-              <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="2" y="12" width="28" height="14" rx="2" />
-                <path d="M2 20h28" />
-                <path d="M6 12V8a2 2 0 012-2h16a2 2 0 012 2v4" />
-              </svg>
+              <div className={styles.sleepingCardImage}>
+                {idx === 0 ? (
+                  <img src="/images/property/bedroom_bed_straight_on.jpg" alt="Bedroom" className={styles.sleepingImg} loading="lazy" />
+                ) : (
+                  <img src="/images/property/living_room_wide.jpg" alt="Living room" className={styles.sleepingImg} loading="lazy" />
+                )}
+              </div>
               <h3>{arrangement.room}</h3>
               <p>{arrangement.bed}</p>
             </div>
@@ -181,9 +209,7 @@ export default function ListingContent({
           {previewAmenities.map((amenity) => (
             <div key={amenity.id} className={styles.amenityItem}>
               <span className={styles.amenityIcon}>
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <AmenityIcon name={amenity.name} />
               </span>
               {amenity.name}
             </div>

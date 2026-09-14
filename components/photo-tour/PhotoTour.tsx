@@ -15,6 +15,22 @@ interface PhotoTourProps {
   saved: boolean;
 }
 
+/* Per-category room features shown under the heading */
+const CATEGORY_FEATURES: Partial<Record<PhotoCategory, string>> = {
+  "Living room 1": "Sofa · Air conditioning · Ceiling fan · TV",
+  "Living room 2": "Ceiling fan · Hot tub",
+  "Full kitchen":
+    "Freezer · Fridge · Blender · Cooker · Cooking basics · Kettle · Microwave · Toaster · Wine glasses · Coffee · Crockery and cutlery",
+  Bedroom:
+    "Double bed · Air conditioning · Bed linen · Ceiling fan · Clothes storage · Cot · Hangers · Iron · Room-darkening blinds · Cleaning available during stay · Cleaning products · Long-term stays allowed · Private entrance · Wifi",
+  "Full bathroom":
+    "Hair dryer · Shower · Hot water · Shampoo · Body soap · Towels",
+  Gym: "Gym equipment · Exercise bike · Weights",
+  Exterior: "Garden · Outdoor seating · BBQ grill",
+  Pool: "Private pool · Sun loungers · Towels provided",
+  "Additional photos": "",
+};
+
 export default function PhotoTour({
   photos,
   onPhotoClick,
@@ -27,24 +43,24 @@ export default function PhotoTour({
   const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const navRef = useRef<HTMLDivElement>(null);
 
-  // Group photos by category, preserving order
+  /* Group photos by category, preserving insertion order */
   const categories = useMemo(() => {
     const map = new Map<PhotoCategory, Photo[]>();
     for (const photo of photos) {
       const existing = map.get(photo.category);
-      if (existing) {
-        existing.push(photo);
-      } else {
-        map.set(photo.category, [photo]);
-      }
+      if (existing) existing.push(photo);
+      else map.set(photo.category, [photo]);
     }
     return Array.from(map.entries());
   }, [photos]);
 
-  // Track active category based on scroll
+  /* Track active category as user scrolls */
   useEffect(() => {
+    const overlay = document.querySelector('[role="dialog"]') as HTMLElement | null;
+    if (!overlay) return;
+
     const handleScroll = () => {
-      const offset = 200;
+      const offset = 220;
       for (let i = categories.length - 1; i >= 0; i--) {
         const el = categoryRefs.current[categories[i][0]];
         if (el) {
@@ -55,25 +71,32 @@ export default function PhotoTour({
           }
         }
       }
-      if (categories.length > 0) {
-        setActiveCategory(categories[0][0]);
-      }
+      if (categories.length > 0) setActiveCategory(categories[0][0]);
     };
 
-    // The scroll container is the modal overlay itself
-    const overlay = document.querySelector('[role="dialog"]') as HTMLElement | null;
-    if (overlay) {
-      overlay.addEventListener("scroll", handleScroll, { passive: true });
-      handleScroll();
-      return () => overlay.removeEventListener("scroll", handleScroll);
-    }
+    overlay.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => overlay.removeEventListener("scroll", handleScroll);
   }, [categories]);
+
+  /* Scroll nav chip into view when active changes */
+  useEffect(() => {
+    if (!activeCategory || !navRef.current) return;
+    const btn = navRef.current.querySelector<HTMLElement>(
+      `[data-category="${CSS.escape(activeCategory)}"]`,
+    );
+    btn?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [activeCategory]);
 
   const scrollToCategory = useCallback((category: PhotoCategory) => {
     const el = categoryRefs.current[category];
-    if (el) {
-      setActiveCategory(category);
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!el) return;
+    setActiveCategory(category);
+    const overlay = document.querySelector('[role="dialog"]') as HTMLElement | null;
+    if (overlay) {
+      const navHeight = 64 + 120; /* modal header + sticky nav */
+      const top = el.offsetTop - navHeight;
+      overlay.scrollTo({ top, behavior: "smooth" });
     }
   }, []);
 
@@ -82,6 +105,25 @@ export default function PhotoTour({
     [photos],
   );
 
+  function PhotoImg({ photo }: { photo: Photo }) {
+    if (photo.src && !photo.src.includes("placeholder.svg")) {
+      return (
+        <img
+          src={photo.src}
+          alt={photo.alt}
+          className={styles.photoImg}
+          loading="lazy"
+        />
+      );
+    }
+    return (
+      <div
+        className={styles.photoPlaceholder}
+        style={{ background: getPlaceholderGradient(photo.category, photo.categoryIndex) }}
+      />
+    );
+  }
+
   return (
     <ModalShell
       onClose={onClose}
@@ -89,111 +131,118 @@ export default function PhotoTour({
       headerRight={
         <>
           <button type="button" className={styles.headerAction} onClick={onShare}>
-            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M2 10v4h12v-4" />
-              <path d="M8 2v8" />
-              <path d="M4 5l4-3 4 3" strokeLinecap="round" strokeLinejoin="round" />
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8" strokeLinecap="round" />
+              <polyline points="16 6 12 2 8 6" />
+              <line x1="12" y1="2" x2="12" y2="15" />
             </svg>
             Share
           </button>
           <button type="button" className={styles.headerAction} onClick={onSave}>
-            <svg viewBox="0 0 16 16" width="14" height="14" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.5">
-              <path d="M8 14S1 9 1 5.5a3.5 3.5 0 017 0 3.5 3.5 0 017 0C15 9 8 14 8 14z" />
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill={saved ? "currentColor" : "none"}
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
             </svg>
             {saved ? "Saved" : "Save"}
           </button>
         </>
       }
     >
-      <div className={styles.container}>
-        {/* Category navigation */}
-        <div className={styles.categoryNav} ref={navRef}>
-  {categories.map(([category, categoryPhotos]) => {
-    const previewPhoto = categoryPhotos[0];
+      {/* ── Category navigation strip ── */}
+      <div className={styles.categoryNav} ref={navRef}>
+        {categories.map(([category, categoryPhotos]) => {
+          const preview = categoryPhotos[0];
+          const isActive = activeCategory === category;
+          return (
+            <button
+              key={category}
+              type="button"
+              data-category={category}
+              className={`${styles.categoryButton} ${isActive ? styles.categoryButtonActive : ""}`}
+              onClick={() => scrollToCategory(category)}
+            >
+              <div className={styles.categoryThumb}>
+                {preview.src && !preview.src.includes("placeholder.svg") ? (
+                  <img
+                    src={preview.src}
+                    alt=""
+                    className={styles.categoryThumbImage}
+                  />
+                ) : (
+                  <div
+                    className={styles.categoryThumbPlaceholder}
+                    style={{ background: getPlaceholderGradient(preview.category, preview.categoryIndex) }}
+                  />
+                )}
+              </div>
+              <span className={styles.categoryLabel}>{category}</span>
+            </button>
+          );
+        })}
+      </div>
 
-    return (
-      <button
-        key={category}
-        type="button"
-        className={`${styles.categoryButton} ${
-          activeCategory === category
-            ? styles.categoryButtonActive
-            : ""
-        }`}
-        onClick={() => scrollToCategory(category)}
-      >
-        <div className={styles.categoryThumbnail}>
-          {previewPhoto.src &&
-          !previewPhoto.src.includes("placeholder.svg") ? (
-            <img
-              src={previewPhoto.src}
-              alt=""
-              className={styles.categoryThumbnailImage}
-            />
-          ) : (
+      {/* ── Category sections ── */}
+      <div className={styles.sections}>
+        {categories.map(([category, categoryPhotos]) => {
+          const [firstPhoto, ...restPhotos] = categoryPhotos;
+          const features = CATEGORY_FEATURES[category];
+
+          return (
             <div
-              className={styles.categoryThumbnailPlaceholder}
-              style={{
-                background: getPlaceholderGradient(
-                  previewPhoto.category,
-                  previewPhoto.categoryIndex,
-                ),
-              }}
-            />
-          )}
-        </div>
+              key={category}
+              ref={(el) => { categoryRefs.current[category] = el; }}
+              className={styles.categorySection}
+              id={`photo-category-${category.replace(/\s+/g, "-").toLowerCase()}`}
+            >
+              {/* Two-column row */}
+              <div className={styles.categoryRow}>
+                {/* Left: heading + features */}
+                <div className={styles.categoryInfo}>
+                  <h2 className={styles.categoryTitle}>{category}</h2>
+                  {features && (
+                    <p className={styles.categoryFeatures}>{features}</p>
+                  )}
+                </div>
 
-        <span className={styles.categoryName}>
-          {category}
-        </span>
+                {/* Right: photos */}
+                <div className={styles.photoStack}>
+                  {/* First photo — full width */}
+                  <button
+                    type="button"
+                    className={`${styles.photoButton} ${styles.photoButtonHero}`}
+                    onClick={() => onPhotoClick(getGlobalIndex(firstPhoto))}
+                    aria-label={firstPhoto.alt}
+                  >
+                    <PhotoImg photo={firstPhoto} />
+                  </button>
 
-        <span className={styles.categoryCount}>
-          {categoryPhotos.length}
-        </span>
-      </button>
-    );
-  })}
-</div>
-
-        {/* Category sections */}
-        {categories.map(([category, categoryPhotos]) => (
-          <div
-            key={category}
-            ref={(el) => { categoryRefs.current[category] = el; }}
-            className={styles.categorySection}
-            id={`photo-category-${category.replace(/\s+/g, "-").toLowerCase()}`}
-          >
-            <h2 className={styles.categoryTitle}>{category}</h2>
-            <div className={styles.photoGrid}>
-              {categoryPhotos.map((photo) => (
-                <button
-                  key={photo.id}
-                  type="button"
-                  className={styles.photoButton}
-                  onClick={() => onPhotoClick(getGlobalIndex(photo))}
-                  aria-label={photo.alt}
-                >
-                  {photo.src && !photo.src.includes("placeholder.svg") ? (
-                    <img
-                      src={photo.src}
-                      alt={photo.alt}
-                      className={styles.photoImg}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div
-                      className={styles.photoPlaceholder}
-                      style={{ background: getPlaceholderGradient(photo.category, photo.categoryIndex) }}
-                    >
-                      {photo.category} {photo.categoryIndex}
+                  {/* Remaining photos — 2-column grid */}
+                  {restPhotos.length > 0 && (
+                    <div className={styles.photoGrid}>
+                      {restPhotos.map((photo) => (
+                        <button
+                          key={photo.id}
+                          type="button"
+                          className={styles.photoButton}
+                          onClick={() => onPhotoClick(getGlobalIndex(photo))}
+                          aria-label={photo.alt}
+                        >
+                          <PhotoImg photo={photo} />
+                        </button>
+                      ))}
                     </div>
                   )}
-                  <div className={styles.photoOverlay} />
-                </button>
-              ))}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </ModalShell>
   );

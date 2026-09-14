@@ -56,25 +56,17 @@ export default function BookingCard({ onReserve, onClaim }: BookingCardProps) {
         </div>
       </div>
 
+      {/* Cancellation - shown above Reserve button in Airbnb */}
+      <div className={styles.cancellation}>
+        Free cancellation before <strong>17 October</strong>
+      </div>
+
       {/* Reserve button */}
       <button type="button" className={styles.reserveButton} onClick={onReserve}>
         Reserve
       </button>
 
       <p className={styles.note}>You won&apos;t be charged yet</p>
-
-      {/* Cancellation */}
-      <div className={styles.cancellation}>
-        <span className={styles.cancellationIcon}>
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 8v4l3 3" strokeLinecap="round" />
-          </svg>
-        </span>
-        <span>
-          Free cancellation before 17 October
-        </span>
-      </div>
     </div>
   );
 }

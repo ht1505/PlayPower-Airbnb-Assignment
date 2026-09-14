@@ -13,6 +13,59 @@ export default function ThingsToKnow() {
       <h2>Things to know</h2>
 
       <div className={styles.columns}>
+        {/* Cancellation policy */}
+        <div className={styles.column}>
+          <h3>Cancellation policy</h3>
+          <div className={styles.ruleItem}>
+            <span className={styles.ruleIcon}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <path d="M16 2v4M8 2v4M3 10h18" />
+              </svg>
+            </span>
+            Free cancellation before 17 October.
+          </div>
+          <div className={styles.ruleItem}>
+            <span className={styles.ruleIcon}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4M12 16h.01" strokeLinecap="round" />
+              </svg>
+            </span>
+            Cancel before check-in on 18 October for a partial refund.
+          </div>
+          {showPolicy && (
+            <div className={styles.ruleItem}>
+              <span className={styles.ruleIcon}>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              </span>
+              Review this host&apos;s full policy for details.
+            </div>
+          )}
+          <button
+            type="button"
+            className={styles.showMoreLink}
+            onClick={() => setShowPolicy((v) => !v)}
+            aria-expanded={showPolicy}
+          >
+            {showPolicy ? "Show less" : "Learn more"}
+            <svg
+              viewBox="0 0 12 12"
+              width="10"
+              height="10"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              style={{ transform: showPolicy ? "rotate(180deg)" : undefined }}
+            >
+              <path d="M4 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
+
         {/* House rules */}
         <div className={styles.column}>
           <h3>House rules</h3>
@@ -72,7 +125,7 @@ export default function ThingsToKnow() {
             onClick={() => setShowRules((v) => !v)}
             aria-expanded={showRules}
           >
-            {showRules ? "Show less" : "Show more"}
+            {showRules ? "Show less" : "Learn more"}
             <svg
               viewBox="0 0 12 12"
               width="10"
@@ -89,7 +142,7 @@ export default function ThingsToKnow() {
 
         {/* Safety & property */}
         <div className={styles.column}>
-          <h3>Safety & property</h3>
+          <h3>Safety &amp; property</h3>
           <div className={`${styles.ruleItem} ${styles.notReported}`}>
             <span className={styles.ruleIcon}>
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -145,7 +198,7 @@ export default function ThingsToKnow() {
             onClick={() => setShowSafety((v) => !v)}
             aria-expanded={showSafety}
           >
-            {showSafety ? "Show less" : "Show more"}
+            {showSafety ? "Show less" : "Learn more"}
             <svg
               viewBox="0 0 12 12"
               width="10"
@@ -154,59 +207,6 @@ export default function ThingsToKnow() {
               stroke="currentColor"
               strokeWidth="2"
               style={{ transform: showSafety ? "rotate(180deg)" : undefined }}
-            >
-              <path d="M4 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Cancellation policy */}
-        <div className={styles.column}>
-          <h3>Cancellation policy</h3>
-          <div className={styles.ruleItem}>
-            <span className={styles.ruleIcon}>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <path d="M16 2v4M8 2v4M3 10h18" />
-              </svg>
-            </span>
-            Free cancellation before 17 October
-          </div>
-          <div className={styles.ruleItem}>
-            <span className={styles.ruleIcon}>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 8v4M12 16h.01" strokeLinecap="round" />
-              </svg>
-            </span>
-            Review the full cancellation policy which applies even if you cancel for illness or disruptions
-          </div>
-          {showPolicy && (
-            <div className={styles.ruleItem}>
-              <span className={styles.ruleIcon}>
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-              </span>
-              Cancel up to 48 hours before check-in for a full refund minus service fee.
-            </div>
-          )}
-          <button
-            type="button"
-            className={styles.showMoreLink}
-            onClick={() => setShowPolicy((v) => !v)}
-            aria-expanded={showPolicy}
-          >
-            {showPolicy ? "Show less" : "Show more"}
-            <svg
-              viewBox="0 0 12 12"
-              width="10"
-              height="10"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              style={{ transform: showPolicy ? "rotate(180deg)" : undefined }}
             >
               <path d="M4 2l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

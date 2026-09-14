@@ -108,11 +108,19 @@ export default function ReviewsSection({
 
       {/* Category breakdown */}
       <div className={styles.categories}>
-        {categories.map((cat) => (
-          <div key={cat.name} className={styles.categoryChip}>
-            <span>{cat.name}</span>
-            <span className={styles.categoryScore}>{cat.score.toFixed(1)}</span>
-          </div>
+        {[
+          { icon: "🛋️", name: "Comfort", count: 6 },
+          { icon: "✅", name: "Accuracy", count: 5 },
+          { icon: "♨️", name: "Hot tub", count: 5 },
+          { icon: "🏠", name: "Condition", count: 4 },
+          { icon: "😊", name: "Hospitality", count: 8 },
+          { icon: "🧹", name: "Cleanliness", count: 4 },
+          { icon: "🏊", name: "Amenities", count: 2 },
+        ].map((cat) => (
+          <button key={cat.name} type="button" className={styles.categoryChip}>
+            <span className={styles.categoryChipEmoji}>{cat.icon}</span>
+            <span>{cat.name} {cat.count}</span>
+          </button>
         ))}
       </div>
 
