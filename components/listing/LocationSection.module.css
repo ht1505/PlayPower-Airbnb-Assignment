@@ -1,0 +1,159 @@
+.location {
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.location h2 {
+  margin: 0 0 24px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.mapContainer {
+  width: 100%;
+  height: 480px;
+  border-radius: 12px;
+  background: #eef3e8;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.water {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 42%;
+  height: 100%;
+  background: #a9d2e5;
+  clip-path: polygon(
+    0 0,
+    94% 0,
+    87% 10%,
+    82% 20%,
+    77% 30%,
+    72% 40%,
+    67% 50%,
+    61% 60%,
+    55% 70%,
+    49% 80%,
+    43% 90%,
+    37% 100%,
+    0 100%
+  );
+}
+
+.mapGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(150, 165, 155, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150, 165, 155, 0.15) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.mapCircle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(190, 218, 178, 0.7);
+  z-index: 1;
+}
+
+.circleOne {
+  width: 126px;
+  height: 126px;
+  left: 25%;
+  top: 37%;
+}
+
+.circleTwo {
+  width: 168px;
+  height: 168px;
+  left: 66%;
+  top: 48%;
+}
+
+.searchButton {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  z-index: 4;
+}
+
+.searchButton:hover {
+  transform: scale(1.03);
+}
+
+.propertyMarker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+  z-index: 3;
+}
+
+.mapControls {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  z-index: 4;
+}
+
+.mapControlButton {
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+}
+
+.mapControlButton:hover {
+  background: var(--surface);
+}
+
+.locationInfo h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.locationInfo p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0 0 8px;
+}
+
+.privacyNote {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 16px;
+}

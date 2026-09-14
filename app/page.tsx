@@ -1,7 +1,10 @@
+import { Suspense } from "react";
+import ListingPage from "@/components/listing/ListingPage";
+
 export default function Home() {
   return (
-    <main>
-      <div>Hello world!</div>
-    </main>
+    <Suspense>
+      <ListingPage />
+    </Suspense>
   );
 }

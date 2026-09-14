@@ -1,0 +1,154 @@
+.card {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.promo {
+  background: linear-gradient(135deg, #E61E4D 0%, #BD1E59 100%);
+  color: var(--white);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.promoText h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.promoText p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.promoClaim {
+  background: var(--white);
+  color: var(--brand);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.promoClaim:hover {
+  opacity: 0.9;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.priceNights {
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.inputGroup {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.inputRow + .inputField {
+  border-top: 1px solid var(--border);
+}
+
+.inputField {
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.inputField + .inputField {
+  border-left: 1px solid var(--border);
+}
+
+.inputLabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.inputValue {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.guestField {
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reserveButton {
+  width: 100%;
+  padding: 14px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(to right, #E61E4D, #E31C5F, #D70466);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 150ms ease;
+}
+
+.reserveButton:hover {
+  filter: brightness(1.04);
+}
+
+.reserveButton:active {
+  transform: scale(0.99);
+}
+
+.note {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 16px;
+}
+
+.cancellation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+  font-size: 14px;
+}
+
+.cancellationIcon {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}

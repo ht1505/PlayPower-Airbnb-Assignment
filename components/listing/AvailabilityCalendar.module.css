@@ -1,0 +1,168 @@
+.calendar {
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.calendarHeader {
+  margin-bottom: 8px;
+}
+
+.calendarHeader h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.calendarSubtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 4px 0 24px;
+}
+
+.months {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.month {
+  width: 100%;
+}
+
+.monthHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.monthTitle {
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 160px;
+  text-align: center;
+}
+
+.navButton {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: background 150ms ease;
+}
+
+.navButton:hover:not(:disabled) {
+  background: var(--surface);
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  margin-bottom: 4px;
+}
+
+.weekday {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 4px 0;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+}
+
+.day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.dayEmpty {
+  visibility: hidden;
+}
+
+.dayAvailable {
+  color: var(--text-primary);
+}
+
+.dayUnavailable {
+  color: var(--border);
+  text-decoration: line-through;
+  cursor: default;
+}
+
+.daySelected {
+  background: var(--text-primary);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.dayInRange {
+  border-radius: 0;
+  background: var(--surface);
+}
+
+.dayRangeStart {
+  border-radius: 50% 0 0 50%;
+  background: var(--surface);
+}
+
+.dayRangeStart::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--text-primary);
+  z-index: -1;
+}
+
+.dayRangeEnd {
+  border-radius: 0 50% 50% 0;
+  background: var(--surface);
+}
+
+.dayRangeEnd::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--text-primary);
+  z-index: -1;
+}
+
+.clearDates {
+  margin-top: 16px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.clearDates:hover {
+  color: var(--text-secondary);
+}
